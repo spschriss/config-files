@@ -1,63 +1,34 @@
-# neovim-config
+# Configuration Files
 
-Configuration files for neovim
+## Language Servers
 
-## Dependencies
+- [Lua](https://github.com/luals/lua-language-server)
+- [Styla](https://github.com/JohnnyMorganz/StyLua)
+- [Go](https://github.com/fatih/vim-go)
+- [Typescript/Javascript](https://github.com/microsoft/typescript-go)
+- [HTML](https://github.com/hrsh7th/vscode-langservers-extracted)
+- [CSS](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#cssls)
+- XML
+- [JSON](https://github.com/hrsh7th/vscode-langservers-extracted)
+- [docker compose language server](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#docker_compose_language_service)
+- [docker-language-server](https://github.com/docker/docker-language-server)
+- [eslint](https://github.com/hrsh7th/vscode-langservers-extracted)
+- [Vim](https://github.com/iamcco/vim-language-server)
 
-### Version Control
+## Plugins 
 
-- Must have [Git](https://git-scm.com/) installed
+Installed with [vim-plug](https://github.com/junegunn/vim-plug)
 
-### Package Managers
-
-- Must have [vim-plug](https://github.com/junegunn/vim-plug) installed
-- Must have [Node](https://nodejs.org/en) version 20+ install
-- Must have gcc installed `sudo apt install gcc`
-
-### Theme
-
-- Must have a [Nerd Font](https://www.nerdfonts.com/font-downloads) installed
-- Terminal must support 256 color mode
-
-### Language Servers
-
-- [Install Golang](https://go.dev/doc/install)
-   - Add `export PATH=$PATH:$HOME/go/bin` to your `.bashrc` on Linux or `.zshrc` on MacOS
-- [Install NodeJS](https://nodejs.org/en)
-- Must have [Lua Language Server](https://luals.github.io/#install) installed
-
-**Install Language Servers**
+## Quick Start
 
 ```sh
-npm i -g vim-language-server \
-  typescript \
-  typescript-language-server \
-  eslint \
-  prettier \
-  jest \
-  ts-jest \
-  @microsoft/compose-language-service \
-  @angular/language-service \
-  vscode-langservers-extracted \
-  graphql-language-service-cli \
-  @johnnymorganz/stylua-bin \
-  @tailwindcss/language-server \
-  @vue/language-server
+npm i -g vscode-langservers-extracted \
+    @microsoft/compose-language-service \
+    vscode-eslint-language-server \
+    @typescript/native-preview \
+    vim-language-server
 ```
-
-**Install Build Tools**
 
 ```sh
-go install golang.org/x/tools/gopls@latest && \
-  go install github.com/shurcooL/markdownfmt@latest && \
-  go install github.com/docker/docker-language-server/cmd/docker-language-server@latest && \
-  go install github.com/sqls-server/sqls@latest && \
-  go install github.com/go-delve/delve/cmd/dlv@latest
+go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
 ```
-
-- Must have go [delve](https://github.com/go-delve/delve/tree/master/Documentation/installation)
-- Must have the [vs-code-language-servers-extended](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#cssls) installed for CSS, Javascript, and HTML
-
-## Next Steps
-
-- Read https://langserver.org/
