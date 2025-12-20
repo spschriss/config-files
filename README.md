@@ -16,7 +16,8 @@ brew install node\
     go \
     docker-language-server \
     docker-compose-langserver \
-    ripgrep
+    ripgrep \
+    git
 ```
 
 ```sh
@@ -28,7 +29,12 @@ npm i -g vscode-langservers-extracted \
 
 ### On Linux
 
-`sudo apt update && sudo apt upgrade && sudo apt install golang-go`
+```sh
+sudo apt update && \
+    sudo apt upgrade && \
+    sudo apt install golang-go \
+        git
+```
 
 ```sh
 sudo apt-get install ripgrep

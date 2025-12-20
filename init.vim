@@ -2,6 +2,8 @@ call plug#begin()
 	" Language Servers
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+	" Parsers
+	Plug 'nvim-treesitter/nvim-treesitter'
 	" File System
 	Plug 'nvim-tree/nvim-tree.lua'
 	Plug 'nvim-tree/nvim-web-devicons'

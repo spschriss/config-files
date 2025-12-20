@@ -1,4 +1,5 @@
 require('lsp')
+require('parsers')
 require('version-control')
 require('file-system')
 require('fuzzy-finders')
