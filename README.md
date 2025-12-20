@@ -1,5 +1,45 @@
 # Configuration Files
 
+## Setup
+
+Install [nerd font](https://www.nerdfonts.com/)
+Install [vim-plug](https://github.com/junegunn/vim-plug)
+
+```sh
+go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
+```
+
+### On Mac
+
+```sh
+brew install node\
+    go \
+    docker-language-server \
+    docker-compose-langserver \
+    ripgrep
+```
+
+```sh
+npm i -g vscode-langservers-extracted \
+    vscode-eslint-language-server \
+    @typescript/native-preview \
+    vim-language-server
+```
+
+### On Linux
+
+```sh
+sudo apt-get install ripgrep
+```
+
+```sh
+npm i -g vscode-langservers-extracted \
+    @microsoft/compose-language-service \
+    vscode-eslint-language-server \
+    @typescript/native-preview \
+    vim-language-server
+```
+
 ## Language Servers
 
 - [Lua](https://github.com/luals/lua-language-server)
@@ -15,20 +55,3 @@
 - [eslint](https://github.com/hrsh7th/vscode-langservers-extracted)
 - [Vim](https://github.com/iamcco/vim-language-server)
 
-## Plugins 
-
-Installed with [vim-plug](https://github.com/junegunn/vim-plug)
-
-## Quick Start
-
-```sh
-npm i -g vscode-langservers-extracted \
-    @microsoft/compose-language-service \
-    vscode-eslint-language-server \
-    @typescript/native-preview \
-    vim-language-server
-```
-
-```sh
-go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
-```
