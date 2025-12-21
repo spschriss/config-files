@@ -25,7 +25,6 @@ brew install node\
 
 ```sh
 npm i -g vscode-langservers-extracted \
-    vscode-eslint-language-server \
     @typescript/native-preview \
     vim-language-server
 ```
@@ -35,11 +34,16 @@ You will want to modify your $PATH to incldue the
 
 ### On Linux
 
+Add 
+
 ```sh
 sudo apt update && \
     sudo apt upgrade && \
     sudo apt install golang-go \
-        git
+        git \
+        libc6 \
+        libc6-dev
+        tree-sitter-cli
 ```
 
 ```sh
@@ -49,9 +53,9 @@ sudo apt-get install ripgrep
 ```sh
 npm i -g vscode-langservers-extracted \
     @microsoft/compose-language-service \
-    vscode-eslint-language-server \
     @typescript/native-preview \
-    vim-language-server
+    vim-language-server \
+    tree-sitter-cli
 ```
 
 ## Language Servers
