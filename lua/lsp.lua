@@ -1,10 +1,12 @@
 -- https://neovim.io/doc/user/lsp.html
-local virt_lines_ns = vim.api.nvim_create_namespace('on_diagnostic_jump')
+local virt_lines_ns = vim.api.nvim_create_namespace("on_diagnostic_jump")
 --- @param diagnostic? vim.Diagnostic
 --- @param bufnr integer
 local function on_jump(diagnostic, bufnr)
 	-- Taken from https://neovim.io/doc/user/diagnostic.html#diagnostic-on-jump-example
-	if not diagnostic then return end
+	if not diagnostic then
+		return
+	end
 	vim.diagnostic.show(
 		virt_lines_ns,
 		bufnr,
@@ -85,14 +87,20 @@ local on_attach = function(client, bufnr)
 	end
 
 	if client:supports_method("textDocument/references") then
-		vim.keymap.set("n", "so", require("telescope.builtin").lsp_references,
-			{ buffer = bufnr, noremap = true, silent = false })
+		vim.keymap.set(
+			"n",
+			"so",
+			require("telescope.builtin").lsp_references,
+			{ buffer = bufnr, noremap = true, silent = false }
+		)
 	end
 	if client:supports_method("textDocument/signatureHelp") then
 		vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help,
 			{ buffer = bufnr, noremap = true, silent = false })
 	end
-	if client:supports_method("textDocument/diagnostic") or client:supports_method("textDocument/publishDiagnostics") then
+	if
+	    client:supports_method("textDocument/diagnostic") or client:supports_method("textDocument/publishDiagnostics")
+	then
 		vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float,
 			{ buffer = bufnr, noremap = true, silent = false })
 	end
@@ -101,10 +109,18 @@ local on_attach = function(client, bufnr)
 		vim.keymap.set("n", "ca", vim.lsp.buf.code_action, { buffer = bufnr, noremap = true, silent = false })
 	end
 	if client:supports_method("workspace/workspaceFolders") then
-		vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder,
-			{ buffer = bufnr, noremap = true, silent = false })
-		vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder,
-			{ buffer = bufnr, noremap = true, silent = false })
+		vim.keymap.set(
+			"n",
+			"<leader>wa",
+			vim.lsp.buf.add_workspace_folder,
+			{ buffer = bufnr, noremap = true, silent = false }
+		)
+		vim.keymap.set(
+			"n",
+			"<leader>wr",
+			vim.lsp.buf.remove_workspace_folder,
+			{ buffer = bufnr, noremap = true, silent = false }
+		)
 		vim.keymap.set("n", "<leader>wl", function()
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		end, { buffer = bufnr, noremap = true, silent = false })
@@ -139,61 +155,69 @@ end
 --Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-vim.lsp.config('*', {
+vim.lsp.config("*", {
 	capabilities = capabilities,
-	root_markers = { '.git' },
+	root_markers = { ".git" },
 	on_attach = on_attach,
-});
-vim.lsp.config('json', {})
+})
+vim.lsp.config("json", {})
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#cssls
-vim.lsp.enable('cssls')
+vim.lsp.enable("cssls")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#docker_compose_language_service
-vim.lsp.enable('docker_compose_language_service')
+vim.lsp.enable("docker_compose_language_service")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#docker_language_server
-vim.lsp.enable('docker_language_server')
+vim.lsp.enable("docker_language_server")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#eslint
-vim.lsp.enable('eslint')
+vim.lsp.enable("eslint")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#html
-vim.lsp.enable('html')
+vim.lsp.enable("html")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#jsonls
-vim.lsp.enable('json')
+vim.lsp.config("json", {
+	cmd = { "vscode-json-language-server" },
+})
+vim.lsp.enable("json")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lua_ls
-vim.lsp.config('lua_ls', {
+vim.lsp.config("lua_ls", {
 	on_init = function(client)
 		if client.workspace_folders then
 			local path = client.workspace_folders[1].name
 			if
-			    path ~= vim.fn.stdpath('config')
-			    and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+			    path ~= vim.fn.stdpath("config")
+			    and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
 			then
 				return
 			end
 		end
 
-		client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+		client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
 			runtime = {
-				version = 'LuaJIT',
+				version = "LuaJIT",
 				path = {
-					'lua/?.lua',
-					'lua/?/init.lua',
+					"lua/?.lua",
+					"lua/?/init.lua",
 				},
 			},
 			workspace = {
 				checkThirdParty = false,
 				library = {
-					vim.env.VIMRUNTIME
-				}
-			}
+					vim.env.VIMRUNTIME,
+				},
+			},
 		})
 	end,
 	settings = {
-		Lua = {}
-	}
+		Lua = {},
+	},
 })
-vim.lsp.enable('lua_ls')
+vim.lsp.enable("lua_ls")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#stylua
-vim.lsp.enable('stylua')
+vim.lsp.enable("stylua")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#tsgo
-vim.lsp.enable('tsgo')
+vim.lsp.config("tsgo", {
+	cmd = {
+		"/usr/local/bin/node_modules/@typescript/native-preview-darwin-x64/lib/tsgo", -- for macos
+	},
+})
+vim.lsp.enable("tsgo")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#vimls
-vim.lsp.enable('vimls')
+vim.lsp.enable("vimls")

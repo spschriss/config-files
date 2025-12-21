@@ -28,6 +28,9 @@ npm i -g vscode-langservers-extracted \
     vim-language-server
 ```
 
+You will want to modify your $PATH to incldue the 
+
+
 ### On Linux
 
 ```sh
