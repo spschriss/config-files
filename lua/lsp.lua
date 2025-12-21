@@ -172,10 +172,7 @@ vim.lsp.enable("eslint")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#html
 vim.lsp.enable("html")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#jsonls
-vim.lsp.config("json", {
-	cmd = { "vscode-json-language-server" },
-})
-vim.lsp.enable("json")
+vim.lsp.enable("jsonls")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lua_ls
 vim.lsp.config("lua_ls", {
 	on_init = function(client)
