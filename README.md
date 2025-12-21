@@ -17,7 +17,8 @@ brew install node\
     docker-language-server \
     docker-compose-langserver \
     ripgrep \
-    git
+    git \
+    stylua
 ```
 
 ```sh
