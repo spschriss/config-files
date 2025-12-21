@@ -4,6 +4,7 @@
 
 Install [nerd font](https://www.nerdfonts.com/)
 Install [vim-plug](https://github.com/junegunn/vim-plug)
+Install [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/releases/tag/v0.26.3)
 
 ```sh
 go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
@@ -18,7 +19,8 @@ brew install node\
     docker-compose-langserver \
     ripgrep \
     git \
-    stylua
+    stylua \
+    tree-sitter-cli
 ```
 
 ```sh

@@ -13,9 +13,12 @@ call plug#begin()
 	Plug 'nvim-telescope/telescope.nvim', { 'tag': 'v0.2.0' }
 	" Version Control
 	Plug 'lewis6991/gitsigns.nvim'
+	" Theme
+	Plug 'lunacookies/vim-colors-xcode'
 call plug#end()
 
 lua require('init')
 set number
 syntax on
+colorscheme xcodedark
 
