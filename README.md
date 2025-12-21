@@ -21,6 +21,7 @@ brew install node\
     git \
     stylua \
     tree-sitter-cli
+    lua-language-server
 ```
 
 ```sh
@@ -34,7 +35,16 @@ You will want to modify your $PATH to incldue the
 
 ### On Linux
 
-Add 
+Add these to your /etc/apt/source.list
+
+```txt
+deb http://ftp.us.debian.org/debian/ sid main
+deb http://ftp.de.debian.org/debian trixie main 
+```
+
+```sh
+go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
+```
 
 ```sh
 sudo apt update && \
@@ -42,8 +52,9 @@ sudo apt update && \
     sudo apt install golang-go \
         git \
         libc6 \
-        libc6-dev
-        tree-sitter-cli
+        libc6-dev \
+        tree-sitter-cli \
+        lua5.1
 ```
 
 ```sh
