@@ -14,11 +14,11 @@ call plug#begin()
 	" Version Control
 	Plug 'lewis6991/gitsigns.nvim'
 	" Theme
-	Plug 'lunacookies/vim-colors-xcode'
+	Plug 'EdenEast/nightfox.nvim'
 call plug#end()
 
 lua require('init')
 set number
 syntax on
-colorscheme xcodedark
+colorscheme carbonfox 
 

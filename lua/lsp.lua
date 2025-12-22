@@ -95,12 +95,14 @@ local on_attach = function(client, bufnr)
 		)
 	end
 	if client:supports_method("textDocument/signatureHelp") then
-		vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help, { buffer = bufnr, noremap = true, silent = false })
+		vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help,
+			{ buffer = bufnr, noremap = true, silent = false })
 	end
 	if
-		client:supports_method("textDocument/diagnostic") or client:supports_method("textDocument/publishDiagnostics")
+	    client:supports_method("textDocument/diagnostic") or client:supports_method("textDocument/publishDiagnostics")
 	then
-		vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float, { buffer = bufnr, noremap = true, silent = false })
+		vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float,
+			{ buffer = bufnr, noremap = true, silent = false })
 	end
 	-- see https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction
 	if client:supports_method("textDocument/codeAction") then
@@ -128,8 +130,8 @@ local on_attach = function(client, bufnr)
 	end
 	-- Support Auto Formatting
 	if
-		not client:supports_method("textDocument/willSaveWaitUntil")
-		and client:supports_method("textDocument/formatting")
+	    not client:supports_method("textDocument/willSaveWaitUntil")
+	    and client:supports_method("textDocument/formatting")
 	then
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			group = vim.api.nvim_create_augroup("my.lsp", { clear = false }),
@@ -164,35 +166,37 @@ local node_path = vim.fn.system("which node")
 node_path = node_path:gsub("\n", "")
 
 -- Go up one directory
-local parent_dir = node_path:match("(.*/)") -- Matches everything before the last '/'
-vim.lsp.config("jsonls", {
-	cmd = { parent_dir .. "vscode-json-language-server" }, -- for debian
-})
-vim.lsp.enable("jsonls")
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#cssls
-vim.lsp.config("cssls", {
-	cmd = { parent_dir .. "vscode-css-language-server" }, -- for debian
-})
-vim.lsp.enable("cssls")
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#eslint
-vim.lsp.enable("eslint", {
-	cmd = { parent_dir .. "vscode-eslint-language-server" }, -- for debian
-})
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#html
-vim.lsp.enable("html", {
-	cmd = { parent_dir .. "vscode-html-language-server" }, -- for debian
-})
+--local parent_dir = node_path:match("(.*/)")             -- Matches everything before the last '/'
+--vim.lsp.config("jsonls", {
+--	cmd = { parent_dir .. "vscode-json-language-server" }, -- for debian
+--})
+--vim.lsp.enable("jsonls")
+---- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#cssls
+--vim.lsp.config("cssls", {
+--	cmd = { parent_dir .. "vscode-css-language-server" }, -- for debian
+--})
+--vim.lsp.enable("cssls")
+---- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#eslint
+--vim.lsp.config("eslint", {
+--	cmd = { parent_dir .. "vscode-eslint-language-server" }, -- for debian
+--})
+--vim.lsp.config("eslint")
+---- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#html
+--vim.lsp.config("html", {
+--	cmd = { parent_dir .. "vscode-html-language-server" }, -- for debian
+--})
+--vim.lsp.enable("html")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#stylua
-vim.lsp.enable("stylua")
+-- vim.lsp.enable("stylua")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#tsgo
 
-vim.lsp.config("tsgo", {
-	cmd = {
-		-- "/usr/local/bin/node_modules/@typescript/native-preview-darwin-x64/lib/tsgo", -- for macos
-		parent_dir .. "tsgo",
-	},
-})
-vim.lsp.enable("tsgo")
+-- vim.lsp.config("tsgo", {
+-- 	cmd = {
+-- 		-- "/usr/local/bin/node_modules/@typescript/native-preview-darwin-x64/lib/tsgo", -- for macos
+-- 		parent_dir .. "tsgo",
+-- 	},
+-- })
+-- vim.lsp.enable("tsgo")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#vimls
 vim.lsp.enable("vimls")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lua_ls
@@ -201,8 +205,8 @@ vim.lsp.config("lua_ls", {
 		if client.workspace_folders then
 			local path = client.workspace_folders[1].name
 			if
-				path ~= vim.fn.stdpath("config")
-				and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+			    path ~= vim.fn.stdpath("config")
+			    and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
 			then
 				return
 			end
@@ -229,3 +233,5 @@ vim.lsp.config("lua_ls", {
 	},
 })
 vim.lsp.enable("lua_ls")
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#gopls
+vim.lsp.enable("gopls")
