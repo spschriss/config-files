@@ -32,10 +32,6 @@ npm i -g vscode-langservers-extracted \
 ### On Linux
 
 ```sh
-go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
-```
-
-```sh
 sudo apt update && \
     sudo apt upgrade && \
     sudo apt install golang-go \
