@@ -4,10 +4,9 @@
 
 Install [nerd font](https://www.nerdfonts.com/)
 Install [vim-plug](https://github.com/junegunn/vim-plug)
-Install [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/releases/tag/v0.26.3)
 
 ```sh
-go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
+go install github.com/docker/docker-language-server/cmd/docker-language-server@latest golang.org/x/tools/gopls@latest
 ```
 
 ### On Mac
@@ -29,9 +28,6 @@ npm i -g vscode-langservers-extracted \
     @typescript/native-preview \
     vim-language-server
 ```
-
-You will want to modify your $PATH to incldue the 
-
 
 ### On Linux
 
