@@ -35,13 +35,6 @@ You will want to modify your $PATH to incldue the
 
 ### On Linux
 
-Add these to your /etc/apt/source.list
-
-```txt
-deb http://ftp.us.debian.org/debian/ sid main
-deb http://ftp.de.debian.org/debian trixie main 
-```
-
 ```sh
 go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
 ```
@@ -54,19 +47,15 @@ sudo apt update && \
         libc6 \
         libc6-dev \
         tree-sitter-cli \
-        lua5.1
-```
-
-```sh
-sudo apt-get install ripgrep
+        lua5.1 \
+        ripgrep
 ```
 
 ```sh
 npm i -g vscode-langservers-extracted \
     @microsoft/compose-language-service \
     @typescript/native-preview \
-    vim-language-server \
-    tree-sitter-cli
+    vim-language-server 
 ```
 
 ## Language Servers
