@@ -4,10 +4,9 @@
 
 Install [nerd font](https://www.nerdfonts.com/)
 Install [vim-plug](https://github.com/junegunn/vim-plug)
-Install [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/releases/tag/v0.26.3)
 
 ```sh
-go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
+go install github.com/docker/docker-language-server/cmd/docker-language-server@latest golang.org/x/tools/gopls@latest
 ```
 
 ### On Mac
@@ -30,21 +29,7 @@ npm i -g vscode-langservers-extracted \
     vim-language-server
 ```
 
-You will want to modify your $PATH to incldue the 
-
-
 ### On Linux
-
-Add these to your /etc/apt/source.list
-
-```txt
-deb http://ftp.us.debian.org/debian/ sid main
-deb http://ftp.de.debian.org/debian trixie main 
-```
-
-```sh
-go install github.com/docker/docker-language-server/cmd/docker-language-server@latest
-```
 
 ```sh
 sudo apt update && \
@@ -54,19 +39,15 @@ sudo apt update && \
         libc6 \
         libc6-dev \
         tree-sitter-cli \
-        lua5.1
-```
-
-```sh
-sudo apt-get install ripgrep
+        lua5.1 \
+        ripgrep
 ```
 
 ```sh
 npm i -g vscode-langservers-extracted \
     @microsoft/compose-language-service \
     @typescript/native-preview \
-    vim-language-server \
-    tree-sitter-cli
+    vim-language-server 
 ```
 
 ## Language Servers
