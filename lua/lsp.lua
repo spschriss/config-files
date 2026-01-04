@@ -14,29 +14,31 @@ local function on_jump(diagnostic, bufnr)
 		{ virtual_lines = { current_line = true }, virtual_text = false }
 	)
 end
-vim.diagnostic.config({
-	jump = { on_jump = on_jump },
-	virtual_lines = true,
-})
+
+vim.opt.completeopt = {
+	"menuone", -- Use the popup menu also when there is only one match. Useful when there is additional information about the match, e.g., what file it comes from.
+	"noselect", -- Same as “noinsert”, except that no menu item is pre-selected. If both “noinsert” and “noselect” are present, “noselect” has precedence.
+	"popup" -- Show extra information about the currently selected completion in a popup window. Only works in combination with “menu” or “menuone”. Overrides “preview”.
+}
 
 -- https://neovim.io/doc/user/lsp.html#lsp-api
 -- https://neovim.io/doc/user/lsp.html#lsp-config
 -- prevent the built-in vim.lsp.completion autotrigger from selecting the first item
-vim.opt.completeopt = { "menuone", "noselect", "popup" }
 local on_attach = function(client, bufnr)
 	if client:supports_method("textDocument/completion") then
 		-- Optional: trigger autocompletion on EVERY keypress. May be slow!
-		local chars = {}
-		for i = 32, 126 do
-			table.insert(chars, string.char(i))
-		end
-		client.server_capabilities.completionProvider.triggerCharacters = chars
+		--	local chars = {}
+		--	for i = 32, 126 do
+		--		table.insert(chars, string.char(i))
+		--	end
+		--	client.server_capabilities.completionProvider.triggerCharacters = chars
 		vim.lsp.completion.enable(true, client.id, bufnr, {
 			autotrigger = true,
 			convert = function(item)
 				return { abbr = item.label:gsub("%b()", "") }
 			end,
 		})
+
 		-- Jump to first completion item with Tab
 		vim.api.nvim_buf_set_keymap(
 			bufnr,
@@ -52,7 +54,6 @@ local on_attach = function(client, bufnr)
 			"pumvisible() ? '<C-n>' : '<Tab>'",
 			{ expr = true, noremap = true }
 		)
-
 		-- Accept the selected completion item with Enter
 		vim.api.nvim_buf_set_keymap(
 			bufnr,
@@ -101,12 +102,18 @@ local on_attach = function(client, bufnr)
 	if
 	    client:supports_method("textDocument/diagnostic") or client:supports_method("textDocument/publishDiagnostics")
 	then
-		vim.keymap.set("n", "<leader>do", vim.diagnostic.open_float,
-			{ buffer = bufnr, noremap = true, silent = false })
+		vim.keymap.set("n", "[e", vim.diagnostic.open_float, { buffer = bufnr, noremap = true, silent = false })
+		vim.diagnostic.config({
+			jump = { on_jump = on_jump },
+			virtual_lines = true,
+		})
 	end
 	-- see https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_codeAction
 	if client:supports_method("textDocument/codeAction") then
 		vim.keymap.set("n", "ca", vim.lsp.buf.code_action, { buffer = bufnr, noremap = true, silent = false })
+	end
+	if client:supports_method("textDocument/hover") then
+		vim.keymap.set('n', '<S-K>', vim.lsp.buf.hover, { noremap = true, silent = true })
 	end
 	if client:supports_method("workspace/workspaceFolders") then
 		vim.keymap.set(
@@ -197,8 +204,6 @@ node_path = node_path:gsub("\n", "")
 -- 	},
 -- })
 -- vim.lsp.enable("tsgo")
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#vimls
-vim.lsp.enable("vimls")
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lua_ls
 vim.lsp.config("lua_ls", {
 	on_init = function(client)
@@ -232,6 +237,10 @@ vim.lsp.config("lua_ls", {
 		Lua = {},
 	},
 })
-vim.lsp.enable("lua_ls")
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#gopls
-vim.lsp.enable("gopls")
+vim.lsp.enable({
+	-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#vimls
+	"vimls",
+	-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#gopls
+	"gopls",
+	"lua_ls",
+})
