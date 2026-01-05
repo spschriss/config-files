@@ -15,78 +15,63 @@ local function on_jump(diagnostic, bufnr)
 	)
 end
 
+
 vim.opt.completeopt = {
 	"menuone", -- Use the popup menu also when there is only one match. Useful when there is additional information about the match, e.g., what file it comes from.
 	"noselect", -- Same as “noinsert”, except that no menu item is pre-selected. If both “noinsert” and “noselect” are present, “noselect” has precedence.
 	"popup" -- Show extra information about the currently selected completion in a popup window. Only works in combination with “menu” or “menuone”. Overrides “preview”.
 }
 
+local has_words_before = function()
+	unpack = unpack or table.unpack
+	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local feedkey = function(key, mode)
+	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
+local cmp = require('cmp')
+cmp.setup({
+	snippet = {
+		expand = function(args)
+			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+		end,
+	},
+	mapping = {
+		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif vim.fn["vsnip#available"](1) == 1 then
+				feedkey("<Plug>(vsnip-expand-or-jump)", "")
+			elseif has_words_before() then
+				cmp.complete()
+			else
+				fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+			end
+		end, { "i", "s" }),
+		["<S-Tab>"] = cmp.mapping(function()
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+				feedkey("<Plug>(vsnip-jump-prev)", "")
+			end
+		end, { "i", "s" }),
+	},
+	sources = cmp.config.sources({
+		{ name = 'nvim_lsp' },
+		{ name = 'vsnip' }, -- For vsnip users.
+	}, {
+		{ name = 'buffer' },
+	})
+})
+
 -- https://neovim.io/doc/user/lsp.html#lsp-api
 -- https://neovim.io/doc/user/lsp.html#lsp-config
 -- prevent the built-in vim.lsp.completion autotrigger from selecting the first item
 local on_attach = function(client, bufnr)
-	if client:supports_method("textDocument/completion") then
-		-- Optional: trigger autocompletion on EVERY keypress. May be slow!
-		--	local chars = {}
-		--	for i = 32, 126 do
-		--		table.insert(chars, string.char(i))
-		--	end
-		--	client.server_capabilities.completionProvider.triggerCharacters = chars
-		vim.lsp.completion.enable(true, client.id, bufnr, {
-			autotrigger = true,
-			convert = function(item)
-				return { abbr = item.label:gsub("%b()", "") }
-			end,
-		})
-
-		-- Jump to first completion item with Tab
-		vim.api.nvim_buf_set_keymap(
-			bufnr,
-			"i",
-			"<Tab>",
-			"pumvisible() ? '<C-n>' : '<Tab>'",
-			{ expr = true, noremap = true }
-		)
-		vim.api.nvim_buf_set_keymap(
-			bufnr,
-			"s",
-			"<Tab>",
-			"pumvisible() ? '<C-n>' : '<Tab>'",
-			{ expr = true, noremap = true }
-		)
-		-- Accept the selected completion item with Enter
-		vim.api.nvim_buf_set_keymap(
-			bufnr,
-			"i",
-			"<CR>",
-			"pumvisible() ? '<C-y>': '<CR>'",
-			{ expr = true, noremap = true }
-		)
-		vim.api.nvim_buf_set_keymap(
-			bufnr,
-			"s",
-			"<CR>",
-			"pumvisible() ? '<C-y>' : '<CR>'",
-			{ expr = true, noremap = true }
-		)
-
-		-- Optionally, you can also add Shift + Tab for backward navigation
-		vim.api.nvim_buf_set_keymap(
-			bufnr,
-			"i",
-			"<S-Tab>",
-			"pumvisible() ? '<C-p>' : '<S-Tab>'",
-			{ expr = true, noremap = true }
-		)
-		vim.api.nvim_buf_set_keymap(
-			bufnr,
-			"s",
-			"<S-Tab>",
-			"pumvisible() ? '<C-p>'  : '<S-Tab>'",
-			{ expr = true, noremap = true }
-		)
-	end
-
 	if client:supports_method("textDocument/references") then
 		vim.keymap.set(
 			"n",
@@ -160,8 +145,7 @@ local on_attach = function(client, bufnr)
 	--	end
 end
 --Enable (broadcasting) snippet capability for completion
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 vim.lsp.config("*", {
 	capabilities = capabilities,
 	root_markers = { ".git", ".mod", ".sum" },
