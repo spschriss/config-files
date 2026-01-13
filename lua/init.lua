@@ -1,4 +1,5 @@
 require('lsp')
+require('debugger')
 require('parsers')
 require('version-control')
 require('file-system')

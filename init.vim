@@ -1,7 +1,16 @@
 call plug#begin()
+	Plug 'nvim-lua/plenary.nvim'
 	" Language Servers
 	Plug 'neovim/nvim-lspconfig'
 	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+	" Debugging
+	Plug 'mfussenegger/nvim-dap'
+	Plug 'mxsdev/nvim-dap-vscode-js'
+	" Testing
+	Plug 'antoinemadec/FixCursorHold.nvim'
+	Plug 'nvim-neotest/nvim-nio'
+	Plug 'nvim-neotest/neotest'
+	Plug 'nvim-neotest/neotest-jest'
 	" Auto Complete
 	" https://github.com/hrsh7th/nvim-cmp
 	Plug 'hrsh7th/cmp-nvim-lsp'
@@ -17,7 +26,6 @@ call plug#begin()
 	Plug 'nvim-tree/nvim-tree.lua'
 	Plug 'nvim-tree/nvim-web-devicons'
 	" Fuzzy Finders
-	Plug 'nvim-lua/plenary.nvim'
 	" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install' }
 	Plug 'nvim-telescope/telescope.nvim', { 'tag': 'v0.2.0' }
 	" Version Control
