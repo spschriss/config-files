@@ -15,7 +15,6 @@ local function on_jump(diagnostic, bufnr)
 	)
 end
 
-
 vim.opt.completeopt = {
 	"menuone", -- Use the popup menu also when there is only one match. Useful when there is additional information about the match, e.g., what file it comes from.
 	"noselect", -- Same as “noinsert”, except that no menu item is pre-selected. If both “noinsert” and “noselect” are present, “noselect” has precedence.
@@ -222,9 +221,17 @@ vim.lsp.config("lua_ls", {
 	},
 })
 vim.lsp.enable({
-	-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#vimls
-	"vimls",
-	-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#gopls
-	"gopls",
+	"angularls",
+	"cssls",
+	"docker_compose_language_service",
+	"docker_language_server",
+	"dockerls",
+	"eslint",
+	"html",
+	"jsonls",
 	"lua_ls",
+	"marksman",
+	"stylua",
+	"tsgo",
+	"vimls",
 })

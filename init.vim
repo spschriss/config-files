@@ -2,7 +2,6 @@ call plug#begin()
 	Plug 'nvim-lua/plenary.nvim'
 	" Language Servers
 	Plug 'neovim/nvim-lspconfig'
-	Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 	" Debugging
 	Plug 'mfussenegger/nvim-dap'
 	Plug 'mxsdev/nvim-dap-vscode-js'

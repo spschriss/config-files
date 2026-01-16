@@ -1,12 +1,10 @@
 require("nvim-treesitter").install({
-	"go",
 	"typescript",
 	"javascript",
 	"json",
 	"markdown",
 	"lua",
 	"luadoc",
-	"nginx",
 	"dot",
 	"dockerfile",
 	"jsx",
@@ -29,7 +27,6 @@ require("nvim-treesitter").install({
 })
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = {
-		"go",
 		"typescript",
 		"javascript",
 		"json",
@@ -45,11 +42,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		"gitattributes",
 		"gitcommit",
 		"gitignore",
-		"gomod",
-		"gosum",
-		"gotmpl",
-		"gowork",
-		"graphql",
 		"html",
 		"tsx",
 		"vim",
