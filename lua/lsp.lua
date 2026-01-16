@@ -18,7 +18,7 @@ end
 vim.opt.completeopt = {
 	"menuone", -- Use the popup menu also when there is only one match. Useful when there is additional information about the match, e.g., what file it comes from.
 	"noselect", -- Same as “noinsert”, except that no menu item is pre-selected. If both “noinsert” and “noselect” are present, “noselect” has precedence.
-	"popup" -- Show extra information about the currently selected completion in a popup window. Only works in combination with “menu” or “menuone”. Overrides “preview”.
+	"popup", -- Show extra information about the currently selected completion in a popup window. Only works in combination with “menu” or “menuone”. Overrides “preview”.
 }
 
 local has_words_before = function()
@@ -31,7 +31,7 @@ local feedkey = function(key, mode)
 	vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
-local cmp = require('cmp')
+local cmp = require("cmp")
 cmp.setup({
 	snippet = {
 		expand = function(args)
@@ -39,7 +39,7 @@ cmp.setup({
 		end,
 	},
 	mapping = {
-		['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+		["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
@@ -60,11 +60,11 @@ cmp.setup({
 		end, { "i", "s" }),
 	},
 	sources = cmp.config.sources({
-		{ name = 'nvim_lsp' },
-		{ name = 'vsnip' }, -- For vsnip users.
+		{ name = "nvim_lsp" },
+		{ name = "vsnip" }, -- For vsnip users.
 	}, {
-		{ name = 'buffer' },
-	})
+		{ name = "buffer" },
+	}),
 })
 
 -- https://neovim.io/doc/user/lsp.html#lsp-api
@@ -80,11 +80,10 @@ local on_attach = function(client, bufnr)
 		)
 	end
 	if client:supports_method("textDocument/signatureHelp") then
-		vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help,
-			{ buffer = bufnr, noremap = true, silent = false })
+		vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help, { buffer = bufnr, noremap = true, silent = false })
 	end
 	if
-	    client:supports_method("textDocument/diagnostic") or client:supports_method("textDocument/publishDiagnostics")
+		client:supports_method("textDocument/diagnostic") or client:supports_method("textDocument/publishDiagnostics")
 	then
 		vim.keymap.set("n", "[e", vim.diagnostic.open_float, { buffer = bufnr, noremap = true, silent = false })
 		vim.diagnostic.config({
@@ -97,7 +96,7 @@ local on_attach = function(client, bufnr)
 		vim.keymap.set("n", "ca", vim.lsp.buf.code_action, { buffer = bufnr, noremap = true, silent = false })
 	end
 	if client:supports_method("textDocument/hover") then
-		vim.keymap.set('n', '<S-K>', vim.lsp.buf.hover, { noremap = true, silent = true })
+		vim.keymap.set("n", "<S-K>", vim.lsp.buf.hover, { noremap = true, silent = true })
 	end
 	if client:supports_method("workspace/workspaceFolders") then
 		vim.keymap.set(
@@ -121,8 +120,8 @@ local on_attach = function(client, bufnr)
 	end
 	-- Support Auto Formatting
 	if
-	    not client:supports_method("textDocument/willSaveWaitUntil")
-	    and client:supports_method("textDocument/formatting")
+		not client:supports_method("textDocument/willSaveWaitUntil")
+		and client:supports_method("textDocument/formatting")
 	then
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			group = vim.api.nvim_create_augroup("my.lsp", { clear = false }),
@@ -144,57 +143,20 @@ local on_attach = function(client, bufnr)
 	--	end
 end
 --Enable (broadcasting) snippet capability for completion
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 vim.lsp.config("*", {
 	capabilities = capabilities,
 	root_markers = { ".git", ".mod", ".sum" },
 	on_attach = on_attach,
 })
 
-local node_path = vim.fn.system("which node")
--- Remove any trailing newline from the node_path
-node_path = node_path:gsub("\n", "")
-
--- Go up one directory
---local parent_dir = node_path:match("(.*/)")             -- Matches everything before the last '/'
---vim.lsp.config("jsonls", {
---	cmd = { parent_dir .. "vscode-json-language-server" }, -- for debian
---})
---vim.lsp.enable("jsonls")
----- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#cssls
---vim.lsp.config("cssls", {
---	cmd = { parent_dir .. "vscode-css-language-server" }, -- for debian
---})
---vim.lsp.enable("cssls")
----- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#eslint
---vim.lsp.config("eslint", {
---	cmd = { parent_dir .. "vscode-eslint-language-server" }, -- for debian
---})
---vim.lsp.config("eslint")
----- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#html
---vim.lsp.config("html", {
---	cmd = { parent_dir .. "vscode-html-language-server" }, -- for debian
---})
---vim.lsp.enable("html")
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#stylua
--- vim.lsp.enable("stylua")
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#tsgo
-
--- vim.lsp.config("tsgo", {
--- 	cmd = {
--- 		-- "/usr/local/bin/node_modules/@typescript/native-preview-darwin-x64/lib/tsgo", -- for macos
--- 		parent_dir .. "tsgo",
--- 	},
--- })
--- vim.lsp.enable("tsgo")
--- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#lua_ls
 vim.lsp.config("lua_ls", {
 	on_init = function(client)
 		if client.workspace_folders then
 			local path = client.workspace_folders[1].name
 			if
-			    path ~= vim.fn.stdpath("config")
-			    and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+				path ~= vim.fn.stdpath("config")
+				and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
 			then
 				return
 			end
