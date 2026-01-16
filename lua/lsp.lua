@@ -80,10 +80,14 @@ local on_attach = function(client, bufnr)
 		)
 	end
 	if client:supports_method("textDocument/signatureHelp") then
-		vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help, { buffer = bufnr, noremap = true, silent = false })
+		vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help,
+			{ buffer = bufnr, noremap = true, silent = false })
+	end
+	if client:supports_method("textDocument/definition") then
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, noremap = true, silent = false })
 	end
 	if
-		client:supports_method("textDocument/diagnostic") or client:supports_method("textDocument/publishDiagnostics")
+	    client:supports_method("textDocument/diagnostic") or client:supports_method("textDocument/publishDiagnostics")
 	then
 		vim.keymap.set("n", "[e", vim.diagnostic.open_float, { buffer = bufnr, noremap = true, silent = false })
 		vim.diagnostic.config({
@@ -120,8 +124,8 @@ local on_attach = function(client, bufnr)
 	end
 	-- Support Auto Formatting
 	if
-		not client:supports_method("textDocument/willSaveWaitUntil")
-		and client:supports_method("textDocument/formatting")
+	    not client:supports_method("textDocument/willSaveWaitUntil")
+	    and client:supports_method("textDocument/formatting")
 	then
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			group = vim.api.nvim_create_augroup("my.lsp", { clear = false }),
@@ -155,8 +159,8 @@ vim.lsp.config("lua_ls", {
 		if client.workspace_folders then
 			local path = client.workspace_folders[1].name
 			if
-				path ~= vim.fn.stdpath("config")
-				and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+			    path ~= vim.fn.stdpath("config")
+			    and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
 			then
 				return
 			end
@@ -194,6 +198,6 @@ vim.lsp.enable({
 	"lua_ls",
 	"marksman",
 	"stylua",
-	"tsgo",
+	"ts_ls",
 	"vimls",
 })
