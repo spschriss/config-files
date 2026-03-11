@@ -25,7 +25,7 @@ brew install node\
 
 ```sh
 npm i -g vscode-langservers-extracted \
-    @typescript/native-preview \
+    typescript typescript-language-server \
     vim-language-server
 ```
 
