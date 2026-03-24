@@ -19,7 +19,7 @@ brew install node\
     ripgrep \
     git \
     stylua \
-    tree-sitter-cli
+    tree-sitter-cli \
     lua-language-server
 ```
 
