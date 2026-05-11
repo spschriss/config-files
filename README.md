@@ -5,15 +5,10 @@
 Install [nerd font](https://www.nerdfonts.com/)
 Install [vim-plug](https://github.com/junegunn/vim-plug)
 
-```sh
-go install github.com/docker/docker-language-server/cmd/docker-language-server@latest golang.org/x/tools/gopls@latest
-```
-
 ### On Mac
 
 ```sh
 brew install node\
-    go \
     docker-language-server \
     docker-compose-langserver \
     ripgrep \
@@ -25,7 +20,7 @@ brew install node\
 
 ```sh
 npm i -g vscode-langservers-extracted \
-    typescript \
+    @microsoft/compose-language-service \
     typescript-language-server \
     vim-language-server
 ```
@@ -35,7 +30,7 @@ npm i -g vscode-langservers-extracted \
 ```sh
 sudo apt update && \
     sudo apt upgrade && \
-    sudo apt install golang-go \
+    sudo apt install \
         git \
         libc6 \
         libc6-dev \
@@ -47,7 +42,7 @@ sudo apt update && \
 ```sh
 npm i -g vscode-langservers-extracted \
     @microsoft/compose-language-service \
-    @typescript/native-preview \
+    typescript-language-server \
     vim-language-server 
 ```
 
@@ -55,7 +50,6 @@ npm i -g vscode-langservers-extracted \
 
 - [Lua](https://github.com/luals/lua-language-server)
 - [Styla](https://github.com/JohnnyMorganz/StyLua)
-- [Go](https://github.com/fatih/vim-go)
 - [Typescript/Javascript](https://github.com/microsoft/typescript-go)
 - [HTML](https://github.com/hrsh7th/vscode-langservers-extracted)
 - [CSS](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#cssls)
