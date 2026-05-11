@@ -31,6 +31,7 @@ call plug#begin()
 	Plug 'lewis6991/gitsigns.nvim'
 	" Theme
 	Plug 'EdenEast/nightfox.nvim'
+	Plug 'nanozuki/tabby.nvim'
 call plug#end()
 
 lua require('init')
