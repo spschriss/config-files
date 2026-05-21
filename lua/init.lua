@@ -1,4 +1,6 @@
 require('lsp')
+require('extras')
 require('fs')
 require('theme')
 require('claude')
+require('debug')

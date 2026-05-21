@@ -1,4 +1,9 @@
-require("claudecode").setup({})
+local ok, claudecode = pcall(require, "claudecode")
+if not ok then
+  vim.notify("plugin not loaded: claudecode (run :PlugInstall)", vim.log.levels.WARN)
+  return
+end
+claudecode.setup({})
 
 local map = vim.keymap.set
 

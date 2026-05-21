@@ -136,6 +136,38 @@ vim.lsp.config("vimls", {
   filetypes = { "vim" },
 })
 
+-- JSON
+vim.lsp.config("jsonls", {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  root_markers = { ".git", "package.json" },
+  filetypes = { "json", "jsonc" },
+})
+
+-- XML
+vim.lsp.config("lemminx", {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  root_markers = { ".git" },
+  filetypes = { "xml", "xsd", "xsl", "xslt", "svg" },
+})
+
+-- CSS / SCSS / LESS
+vim.lsp.config("cssls", {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  root_markers = { "package.json", ".git" },
+  filetypes = { "css", "scss", "less" },
+})
+
+-- Sass (indented syntax)
+vim.lsp.config("somesass_ls", {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  root_markers = { "package.json", ".git" },
+  filetypes = { "scss", "sass", "css" },
+})
+
 -- Lua
 vim.lsp.config("lua_ls", {
   on_attach = on_attach,
@@ -156,4 +188,14 @@ vim.lsp.config("lua_ls", {
 })
 
 -- Enable them all
-vim.lsp.enable({ "rust_analyzer", "ts_ls", "angularls", "lua_ls", "vimls" })
+vim.lsp.enable({
+  "rust_analyzer",
+  "ts_ls",
+  "angularls",
+  "lua_ls",
+  "vimls",
+  "jsonls",
+  "lemminx",
+  "cssls",
+  "somesass_ls",
+})

@@ -20,12 +20,23 @@ call plug#begin()
 	Plug 'lewis6991/gitsigns.nvim'
 	" Claude Code
 	Plug 'coder/claudecode.nvim'
+	" Essentials
+	Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master', 'do': ':TSUpdate' }
+	Plug 'folke/which-key.nvim'
+	Plug 'numToStr/Comment.nvim'
+	Plug 'windwp/nvim-autopairs'
+	" Debugger
+	Plug 'mfussenegger/nvim-dap'
+	Plug 'nvim-neotest/nvim-nio'
+	Plug 'rcarriga/nvim-dap-ui'
+	Plug 'theHamsta/nvim-dap-virtual-text'
+	Plug 'mxsdev/nvim-dap-vscode-js'
 call plug#end()
 
 set number
 syntax enable
 filetype plugin indent on
-colorscheme carbonfox
+colorscheme nordfox
 " Always show tabline plugin
 " vim.o.showtabline = 2
 lua require('init')
