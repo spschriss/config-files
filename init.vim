@@ -18,6 +18,8 @@ call plug#begin()
 	Plug 'nvim-tree/nvim-tree.lua'
 	Plug 'nanozuki/tabby.nvim'
 	Plug 'lewis6991/gitsigns.nvim'
+	" Claude Code
+	Plug 'coder/claudecode.nvim'
 call plug#end()
 
 set number
