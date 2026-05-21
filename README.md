@@ -1,62 +1,47 @@
-# Configuration Files
+# config-files
 
-## Setup
+My NeoVim Configuration Setup
 
-Install [nerd font](https://www.nerdfonts.com/)
-Install [vim-plug](https://github.com/junegunn/vim-plug)
+## How to Use
 
-### On Mac
 
-```sh
-brew install node\
-    docker-language-server \
-    docker-compose-langserver \
-    ripgrep \
-    git \
-    stylua \
-    tree-sitter-cli \
-    lua-language-server
-```
+1. Install your [nerdfont](https://www.nerdfonts.com/font-downloads) of choice
+2. Install neovim
+3. Clone this repository into your `~/.config/nvim` directory
 
 ```sh
-npm i -g vscode-langservers-extracted \
-    @microsoft/compose-language-service \
-    typescript-language-server \
-    vim-language-server
+git clone https://github.com/spschriss/config-files ~/.config/nvim
 ```
 
-### On Linux
+4. Make sure you have the latest version of neovim installed
 
 ```sh
-sudo apt update && \
-    sudo apt upgrade && \
-    sudo apt install \
-        git \
-        libc6 \
-        libc6-dev \
-        tree-sitter-cli \
-        lua5.1 \
-        ripgrep
+brew install neovim
 ```
+
+5. Intall [vim-plug](https://github.com/junegunn/vim-plug#installation)
+6. Install [ripgrep](https://github.com/BurntSushi/ripgrep#installation)
 
 ```sh
-npm i -g vscode-langservers-extracted \
-    @microsoft/compose-language-service \
-    typescript-language-server \
-    vim-language-server 
+brew install ripgrep
 ```
 
-## Language Servers
+7. Make sure you have `nvm` installed and have the latest version of node installed
 
-- [Lua](https://github.com/luals/lua-language-server)
-- [Styla](https://github.com/JohnnyMorganz/StyLua)
-- [Typescript/Javascript](https://github.com/microsoft/typescript-go)
-- [HTML](https://github.com/hrsh7th/vscode-langservers-extracted)
-- [CSS](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#cssls)
-- XML
-- [JSON](https://github.com/hrsh7th/vscode-langservers-extracted)
-- [docker compose language server](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#docker_compose_language_service)
-- [docker-language-server](https://github.com/docker/docker-language-server)
-- [eslint](https://github.com/hrsh7th/vscode-langservers-extracted)
-- [Vim](https://github.com/iamcco/vim-language-server)
+```sh
+brew install nvm \
+  && mkdir ~/.nvm \
+  && nvm install node
+```
 
+8. Install langauge servers with npm
+
+```sh
+npm install -g typescript-language-server \
+  typescript \
+  vscode-langservers-extracted \
+  bash-language-server
+```
+
+9. Install Plugins with `PlugInstall`
+10. Happy Coding

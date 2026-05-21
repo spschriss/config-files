@@ -1,41 +1,29 @@
 call plug#begin()
-	Plug 'nvim-lua/plenary.nvim'
-	" Language Servers
+	" Language Server
 	Plug 'neovim/nvim-lspconfig'
-	" Debugging
-	Plug 'mfussenegger/nvim-dap'
-	Plug 'mxsdev/nvim-dap-vscode-js'
-	" Testing
-	Plug 'antoinemadec/FixCursorHold.nvim'
-	Plug 'nvim-neotest/nvim-nio'
-	Plug 'nvim-neotest/neotest'
-	Plug 'nvim-neotest/neotest-jest'
-	" Auto Complete
-	" https://github.com/hrsh7th/nvim-cmp
+	Plug 'hrsh7th/nvim-cmp'
 	Plug 'hrsh7th/cmp-nvim-lsp'
 	Plug 'hrsh7th/cmp-buffer'
 	Plug 'hrsh7th/cmp-path'
 	Plug 'hrsh7th/cmp-cmdline'
-	Plug 'hrsh7th/nvim-cmp'
-	Plug 'hrsh7th/cmp-vsnip'
-	Plug 'hrsh7th/vim-vsnip'
-	" Parsers
-	Plug 'nvim-treesitter/nvim-treesitter'
-	" File System
-	Plug 'nvim-tree/nvim-tree.lua'
-	Plug 'nvim-tree/nvim-web-devicons'
-	" Fuzzy Finders
-	" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release --target install' }
-	Plug 'nvim-telescope/telescope.nvim', { 'tag': 'v0.2.0' }
-	" Version Control
-	Plug 'lewis6991/gitsigns.nvim'
+	Plug 'L3MON4D3/LuaSnip'
+	Plug 'saadparwaiz1/cmp_luasnip'
+	" Finder
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+	Plug 'nvim-telescope/telescope.nvim'
 	" Theme
 	Plug 'EdenEast/nightfox.nvim'
+	Plug 'nvim-tree/nvim-web-devicons'
+	Plug 'nvim-tree/nvim-tree.lua'
 	Plug 'nanozuki/tabby.nvim'
+	Plug 'lewis6991/gitsigns.nvim'
 call plug#end()
 
-lua require('init')
 set number
-syntax on
-colorscheme carbonfox 
-
+syntax enable
+filetype plugin indent on
+colorscheme carbonfox
+" Always show tabline plugin
+" vim.o.showtabline = 2
+lua require('init')
