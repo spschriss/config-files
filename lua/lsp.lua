@@ -23,11 +23,8 @@ local on_attach = function(_, bufnr)
   vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
 end
 
--- Add this to your on_attach or a separate block
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
--- completion.lua
 
 local cmp = require("cmp")
 local luasnip = require("luasnip")
@@ -73,7 +70,6 @@ cmp.setup({
   }),
 })
 
--- Command-line completion
 cmp.setup.cmdline(":", {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
@@ -89,91 +85,24 @@ cmp.setup.cmdline("/", {
   },
 })
 
--- Rust
-vim.lsp.config("rust_analyzer", {
+-- Apply on_attach + capabilities to every LSP. Per-server blocks below only
+-- contain fields that deviate from nvim-lspconfig defaults.
+vim.lsp.config("*", {
   on_attach = on_attach,
   capabilities = capabilities,
-  -- cmd = { "rust-analyzer" },
-  root_markers = { "Cargo.toml", "rust-project.json" },
- -- settings = {
- --   ["rust-analyzer"] = {
- --     cargo = { allFeatures = true },
- --     checkOnSave =  true,
- --   },
- -- },
 })
 
--- TypeScript / JavaScript
-vim.lsp.config("ts_ls", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  root_markers = {
-      "package.json",
-      "package-lock.json",
-      "pnpm-workspace.yaml",
-      "pnpm-workspace.yml",
-      "yarn.lock",
-      "pnpm-lock.yaml",
-      "pnpm-lock.yml",
-      "tsconfig.json",
-      "jsconfig.json",
-  },
-})
-
--- Angular
+-- Angular: scope to .ts and .html only (skip typescriptreact / htmlangular)
 vim.lsp.config("angularls", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  root_markers = { "angular.json", "nx.json", "project.json" },
-  filetypes = { "typescript", "html", "typescriptreact", "typescript.tsx" },
+  filetypes = { "typescript", "html" },
 })
 
--- Vim script
-vim.lsp.config("vimls", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  root_markers = { ".git", "init.vim", "init.lua" },
-  filetypes = { "vim" },
-})
-
--- JSON
-vim.lsp.config("jsonls", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  root_markers = { ".git", "package.json" },
-  filetypes = { "json", "jsonc" },
-})
-
--- XML
-vim.lsp.config("lemminx", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  root_markers = { ".git" },
-  filetypes = { "xml", "xsd", "xsl", "xslt", "svg" },
-})
-
--- CSS / SCSS / LESS
-vim.lsp.config("cssls", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  root_markers = { "package.json", ".git" },
-  filetypes = { "css", "scss", "less" },
-})
-
--- Sass (indented syntax)
+-- somesass_ls: lspconfig ships a typo (`.package.json`); use the correct marker.
 vim.lsp.config("somesass_ls", {
-  on_attach = on_attach,
-  capabilities = capabilities,
   root_markers = { "package.json", ".git" },
-  filetypes = { "scss", "sass", "css" },
 })
 
--- Lua
 vim.lsp.config("lua_ls", {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  -- cmd = { "lua-language-server" },
-  root_markers = { ".luarc.json", ".luarc.jsonc", ".luacheckrc" },
   settings = {
     Lua = {
       runtime = { version = "LuaJIT" },
@@ -187,7 +116,6 @@ vim.lsp.config("lua_ls", {
   },
 })
 
--- Enable them all
 vim.lsp.enable({
   "rust_analyzer",
   "ts_ls",
