@@ -2,8 +2,8 @@
 local on_attach = function(_, bufnr)
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
 
-  vim.keymap.set("n", "grd", vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set("n", "grD", vim.lsp.buf.definition, bufopts)
+  vim.keymap.set("n", "grd", vim.lsp.buf.definition, bufopts)
+  vim.keymap.set("n", "grD", vim.lsp.buf.declaration, bufopts)
   vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
   vim.keymap.set("n", "E", vim.diagnostic.open_float, bufopts)
   vim.keymap.set("n", "gri", vim.lsp.buf.implementation, bufopts)
