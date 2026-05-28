@@ -8,16 +8,23 @@ local function safe_setup(name, opts)
   return mod
 end
 
-safe_setup("nvim-treesitter.configs", {
-  ensure_installed = {
+local ts_ok, ts = pcall(require, "nvim-treesitter")
+if ts_ok then
+  ts.install({
     "lua", "vim", "vimdoc", "query",
     "typescript", "tsx", "javascript", "html", "css", "json",
     "markdown", "markdown_inline",
     "rust", "bash",
-  },
-  highlight = { enable = true },
-  indent = { enable = true },
-})
+  })
+  vim.api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+      pcall(vim.treesitter.start, args.buf)
+      if vim.bo[args.buf].filetype ~= "" then
+        vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      end
+    end,
+  })
+end
 
 safe_setup("which-key")
 safe_setup("Comment")

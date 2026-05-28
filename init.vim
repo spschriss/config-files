@@ -21,7 +21,7 @@ call plug#begin()
 	" Claude Code
 	Plug 'coder/claudecode.nvim'
 	" Essentials
-	Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'master', 'do': ':TSUpdate' }
+	Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
 	Plug 'folke/which-key.nvim'
 	Plug 'numToStr/Comment.nvim'
 	Plug 'windwp/nvim-autopairs'
@@ -34,6 +34,8 @@ call plug#begin()
 call plug#end()
 
 set number
+" Let the terminal handle mouse selection / right-click copy
+set mouse=
 syntax enable
 filetype plugin indent on
 colorscheme nordfox
