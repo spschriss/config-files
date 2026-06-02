@@ -16,23 +16,26 @@ require("nvim-tree").setup({
 	git = {
 		ignore = false,
 	},
-	on_attach = function(_)
-		local telescope = require('telescope')
-		telescope.load_extension('fzf')
-
-		local builtin = telescope.builtin
-		vim.keymap.set('n', '<leader>ff', function()
-			builtin.find_files({
-				hidden = true,
-				no_ignore = true,
-				file_ignore_patterns = { "^%.git/", "node_modules/" },
-			})
-		end, { desc = 'Telescope find files' })
-		vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-		vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-		vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+	on_attach = function(bufnr)
+		-- Apply nvim-tree's default keymaps (Enter, <CR>, etc.)
+		require("nvim-tree.api").config.mappings.default_on_attach(bufnr)
 	end
 })
+
+local telescope = require('telescope')
+telescope.load_extension('fzf')
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', function()
+	builtin.find_files({
+		hidden = true,
+		no_ignore = true,
+		file_ignore_patterns = { "^%.git/", "node_modules/" },
+	})
+end, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 
