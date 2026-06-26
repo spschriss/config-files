@@ -1,3 +1,48 @@
+local conform = require("conform")
+require("conform").setup({
+  formatters_by_ft = {
+
+  },
+  format_on_save = {
+    timeout_ms = 1000,
+    lsp_fallback = true,
+  },
+})
+
+conform.setup({
+  formatters = {
+    eslint = {
+      command = "eslint",
+      args = {
+        "--fix",
+        "--stdin",
+        "--stdin-filename",
+        "$FILENAME",
+      },
+      stdin = true,
+    },
+  },
+  formatters_by_ft = {
+    -- Web stuff
+    javascript = { { "prettierd", "prettier" }, "eslint" },
+    typescript = { { "prettierd", "prettier" }, "eslint" },
+    javascriptreact = { { "prettierd", "prettier" }, "eslint" },
+    typescriptreact = { { "prettierd", "prettier" }, "eslint" },
+    css = { { "prettierd", "prettier" } },
+    html = { { "prettierd", "prettier" } },
+    json = { { "prettierd", "prettier" } },
+    markdown = { { "prettierd", "prettier" } },
+    yaml = { { "prettierd", "prettier" } },
+    rust = { "rustfmt" },
+    lua = { "stylua" },
+    go = { "gofmt", "goimports" },
+  },
+  format_on_save = {
+    timeout_ms = 1500,
+    lsp_fallback = true,
+  },
+})
+
 -- lsp.lua
 local on_attach = function(_, bufnr)
   local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -21,6 +66,18 @@ local on_attach = function(_, bufnr)
     vim.lsp.buf.format({ async = true })
   end, bufopts)
   vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { noremap = true })
+
+  vim.api.nvim_create_user_command("Format", function(args)
+    local range = nil
+    if args.count ~= -1 then
+      local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+      range = {
+        start = { args.line1, 0 },
+        ["end"] = { args.line2, end_line:len() },
+      }
+    end
+    conform.format({ async = true, lsp_format = "fallback", range = range })
+  end, { range = true })
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

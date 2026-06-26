@@ -8,6 +8,8 @@ call plug#begin()
 	Plug 'hrsh7th/cmp-cmdline'
 	Plug 'L3MON4D3/LuaSnip'
 	Plug 'saadparwaiz1/cmp_luasnip'
+  " Syntax
+	Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
 	" Finder
 	Plug 'nvim-lua/plenary.nvim'
 	Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -20,25 +22,29 @@ call plug#begin()
 	Plug 'lewis6991/gitsigns.nvim'
 	" Claude Code
 	Plug 'coder/claudecode.nvim'
-	" Essentials
-	Plug 'nvim-treesitter/nvim-treesitter', { 'branch': 'main', 'do': ':TSUpdate' }
-	Plug 'folke/which-key.nvim'
-	Plug 'numToStr/Comment.nvim'
-	Plug 'windwp/nvim-autopairs'
 	" Debugger
 	Plug 'mfussenegger/nvim-dap'
 	Plug 'nvim-neotest/nvim-nio'
 	Plug 'rcarriga/nvim-dap-ui'
 	Plug 'theHamsta/nvim-dap-virtual-text'
 	Plug 'mxsdev/nvim-dap-vscode-js'
+  " Enhancements
+	Plug 'folke/which-key.nvim'
+	Plug 'numToStr/Comment.nvim'
+	Plug 'windwp/nvim-autopairs'
+  Plug 'nvim-lualine/lualine.nvim'
+  Plug 'stevearc/conform.nvim'
+  Plug 'windwp/nvim-autopairs'
+  Plug 'mattn/emmet-vim'
 call plug#end()
 
 set number
 " Let the terminal handle mouse selection / right-click copy
-set mouse=
+set mouse
 syntax enable
 filetype plugin indent on
 colorscheme nordfox
+set clipboard+=unnamedplus,unnamed
 " Always show tabline plugin
 " vim.o.showtabline = 2
 lua require('init')
