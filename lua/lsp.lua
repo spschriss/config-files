@@ -1,13 +1,4 @@
 local conform = require("conform")
-require("conform").setup({
-  formatters_by_ft = {
-
-  },
-  format_on_save = {
-    timeout_ms = 1000,
-    lsp_fallback = true,
-  },
-})
 
 conform.setup({
   formatters = {
@@ -23,23 +14,22 @@ conform.setup({
     },
   },
   formatters_by_ft = {
-    -- Web stuff
     javascript = { { "prettierd", "prettier" }, "eslint" },
     typescript = { { "prettierd", "prettier" }, "eslint" },
     javascriptreact = { { "prettierd", "prettier" }, "eslint" },
     typescriptreact = { { "prettierd", "prettier" }, "eslint" },
-    css = { { "prettierd", "prettier" } },
-    html = { { "prettierd", "prettier" } },
-    json = { { "prettierd", "prettier" } },
-    markdown = { { "prettierd", "prettier" } },
-    yaml = { { "prettierd", "prettier" } },
+    css = { "prettierd", "prettier", stop_after_first = true },
+    html = { "prettierd", "prettier", stop_after_first = true },
+    json = { "prettierd", "prettier", stop_after_first = true },
+    markdown = { "prettierd", "prettier", stop_after_first = true },
+    yaml = { "prettierd", "prettier", stop_after_first = true },
     rust = { "rustfmt" },
     lua = { "stylua" },
     go = { "gofmt", "goimports" },
   },
   format_on_save = {
     timeout_ms = 1500,
-    lsp_fallback = true,
+    lsp_format = "fallback",
   },
 })
 
