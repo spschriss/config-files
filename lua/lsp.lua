@@ -174,3 +174,29 @@ vim.lsp.enable({
   "cssls",
   "somesass_ls",
 })
+
+vim.api.nvim_create_user_command("LspInfo", function()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if #clients == 0 then
+    vim.notify("No LSP clients attached to this buffer", vim.log.levels.WARN)
+    return
+  end
+  local lines = {}
+  for _, client in ipairs(clients) do
+    local cmd = type(client.config.cmd) == "table" and table.concat(client.config.cmd, " ") or "<function>"
+    table.insert(lines, string.format("• %s  (id: %d)", client.name, client.id))
+    table.insert(lines, string.format("  root: %s", client.root_dir or "none"))
+    table.insert(lines, string.format("  cmd:  %s", cmd))
+  end
+  vim.notify(table.concat(lines, "\n"), vim.log.levels.INFO)
+end, { desc = "Show attached LSP clients" })
+
+vim.api.nvim_create_user_command("LspRestart", function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+    vim.lsp.stop_client(client.id)
+  end
+  vim.defer_fn(function()
+    vim.api.nvim_exec_autocmds("FileType", { buf = bufnr })
+  end, 500)
+end, { desc = "Restart attached LSP clients" })

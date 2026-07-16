@@ -43,7 +43,7 @@ set number
 set mouse
 syntax enable
 filetype plugin indent on
-colorscheme nordfox
+colorscheme carbonfox
 set clipboard+=unnamedplus,unnamed
 " Always show tabline plugin
 " vim.o.showtabline = 2
